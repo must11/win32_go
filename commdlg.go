@@ -58,8 +58,8 @@ type CHOOSECOLOR struct {
 // https://learn.microsoft.com/zh-cn/windows/win32/api/commdlg/ns-commdlg-openfilenamea
 type OPENFILENAME struct {
 	LStructSize       uint32
-	HwndOwner         windows.HWND
-	HInstance         windows.HWND
+	HwndOwner         HWND
+	HInstance         HINSTANCE
 	LpstrFilter       *uint16
 	LpstrCustomFilter *uint16
 	NMaxCustFilter    uint32
@@ -95,7 +95,7 @@ type PRINTPAGERANGE struct {
 
 type PRINTDLGEX struct {
 	lStructSize         int32
-	hwndOwner           windows.HWND
+	hwndOwner           HINSTANCE
 	hDevMode            uintptr
 	HDevNames           uintptr
 	HDC                 uintptr

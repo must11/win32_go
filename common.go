@@ -7,6 +7,15 @@ import (
 	"golang.org/x/sys/windows"
 )
 
+type HWND uintptr
+type HANDLE uintptr
+type HINSTANCE HANDLE
+type DWORD int32
+type WORD int16
+type LPOFNHOOKPROC uintptr
+type LPEDITMENU uintptr
+type HDWP HANDLE
+
 // 辅助类型，用于产生 *uint16 分配内存
 type uint16Ptr struct {
 	s []uint16
@@ -22,7 +31,7 @@ func (u *uint16Ptr) String() string {
 
 func NewUint16Ptr(size uint32) *uint16Ptr {
 	return &uint16Ptr{
-		s: make([]uint16, size, size),
+		s: make([]uint16, size),
 	}
 }
 
