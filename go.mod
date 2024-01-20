@@ -1,4 +1,4 @@
-module github.vom/must/win32_go
+module github.vom/must11/win32_go
 
 go 1.19
 
