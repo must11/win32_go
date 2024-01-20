@@ -3,8 +3,6 @@ package win32go
 import (
 	"fmt"
 	"strings"
-
-	"golang.org/x/sys/windows"
 )
 
 type HWND uintptr
@@ -26,7 +24,12 @@ func (u *uint16Ptr) Pointer() *uint16 {
 }
 
 func (u *uint16Ptr) String() string {
-	return strings.TrimRight(windows.UTF16PtrToString(&u.s[0]), " ")
+	r := make([]rune, 0, len(u.s))
+	for _, v := range u.s {
+		r = append(r, rune(v))
+	}
+	r = r[0 : len(r)-2]
+	return strings.TrimRight(string(r), " ")
 }
 
 func NewUint16Ptr(size uint32) *uint16Ptr {
