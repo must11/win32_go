@@ -18,7 +18,7 @@ func TestGetConsoleWindow(t *testing.T) {
 	h := GetConsoleWindow()
 	t.Log(h)
 	fileName := NewUint16Ptr(256)
-	b := GetModuleFileName(HINSTANCT(h), fileName.Pointer(), 256)
+	b := GetModuleFileName(HINSTANCE(h), fileName.Pointer(), 256)
 	if b {
 		t.Log(fileName.String())
 	}

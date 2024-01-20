@@ -2,7 +2,6 @@ package win32go
 
 import (
 	"fmt"
-	"strings"
 )
 
 type HWND uintptr
@@ -24,12 +23,26 @@ func (u *uint16Ptr) Pointer() *uint16 {
 }
 
 func (u *uint16Ptr) String() string {
-	r := make([]rune, 0, len(u.s))
-	for _, v := range u.s {
-		r = append(r, rune(v))
+	index := len(u.s) - 1
+	for index >= 0 {
+		v := u.s[index]
+		if v != uint16(0) {
+			break
+		}
+		index--
+
 	}
-	r = r[0 : len(r)-2]
-	return strings.TrimRight(string(r), " ")
+	if index < 0 {
+		return ""
+	}
+	r := make([]rune, 0, index+1)
+	i := 0
+	for i <= index {
+		r = append(r, rune(u.s[i]))
+		i++
+
+	}
+	return string(r)
 }
 
 func NewUint16Ptr(size uint32) *uint16Ptr {
