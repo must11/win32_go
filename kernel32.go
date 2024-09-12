@@ -9,16 +9,11 @@ import (
 )
 
 var (
-	kernel32          *windows.LazyDLL
-	getModuleHandle   *windows.LazyProc
+	kernel32          = windows.NewLazySystemDLL("kernel32.dll")
+	getModuleHandle   = kernel32.NewProc("GetModuleHandleW")
 	getModuleFileName *windows.LazyProc
 	getConsoleWindow  *windows.LazyProc
 )
-
-func init() {
-	kernel32 = windows.NewLazySystemDLL("kernel32.dll")
-	getModuleHandle = kernel32.NewProc("GetModuleHandleW")
-}
 
 func GetModuleHandle(lpModuleName *uint16) HINSTANCE {
 	ret, _, _ := syscall.SyscallN(getModuleHandle.Addr(), uintptr(unsafe.Pointer(lpModuleName)))

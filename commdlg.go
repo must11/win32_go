@@ -94,9 +94,9 @@ type PRINTPAGERANGE struct {
 }
 
 type PRINTDLGEX struct {
-	lStructSize         int32
-	hwndOwner           HINSTANCE
-	hDevMode            uintptr
+	LStructSize         int32
+	HwndOwner           HINSTANCE
+	HDevMode            uintptr
 	HDevNames           uintptr
 	HDC                 uintptr
 	Flags               uint32
@@ -121,7 +121,7 @@ type HPROPSHEETPAGE uintptr
 var chooseColorProc *windows.LazyProc
 var openFileNameProc *windows.LazyProc
 var saveFileNameProc *windows.LazyProc
-var printDlgExProc *windows.LazyProc
+
 var libcomdlg32 *windows.LazyDLL
 
 func init() {
@@ -129,7 +129,6 @@ func init() {
 	chooseColorProc = libcomdlg32.NewProc("ChooseColorW")
 	openFileNameProc = libcomdlg32.NewProc("GetOpenFileNameW")
 	saveFileNameProc = libcomdlg32.NewProc("GetSaveFileNameW")
-	printDlgExProc = libcomdlg32.NewProc("PrintDlgExW")
 }
 
 func ChooseColor(choosecolor *CHOOSECOLOR) bool {

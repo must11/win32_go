@@ -1,7 +1,9 @@
 package win32go
 
 import (
+	"errors"
 	"fmt"
+	"unicode/utf16"
 )
 
 type HWND uintptr
@@ -49,6 +51,24 @@ func NewUint16Ptr(size uint32) *uint16Ptr {
 	return &uint16Ptr{
 		s: make([]uint16, size),
 	}
+}
+
+var ErrOutOfSize = errors.New("string too long for point")
+
+func (u *uint16Ptr) SetString(str string) error {
+	v := utf16.Encode([]rune(str))
+	if len(v) > len(u.s)-1 {
+		return ErrOutOfSize
+	}
+	i := 0
+	for i < len(v) {
+		u.s[i] = v[i]
+		i++
+	}
+	for i < len(u.s) {
+		u.s[i] = 0
+	}
+	return nil
 }
 
 // 文件类型过滤，用于产生符合win32过滤规则的字符串
