@@ -1693,6 +1693,21 @@ type PAINTSTRUCT struct {
 	RgbReserved byte
 }
 
+type WNDCLASSEX struct {
+	CbSize        uint32
+	Style         uint32
+	LpfnWndProc   uintptr
+	CnClsExtra    int32
+	CbWndExtra    int32
+	HInstance     HINSTANCE
+	HIcon         HANDLE
+	HCursor       HANDLE
+	HbrBackground HANDLE
+	LpszMenuName  *uint16
+	LpszClassName *uint16
+	HIconSm       HANDLE
+}
+
 var (
 	// Library
 	user32 *windows.LazyDLL
@@ -3189,4 +3204,7 @@ func WindowFromPoint(Point POINT) HWND {
 func BeginPaint(hwnd HDWP, p *PAINTSTRUCT) HDWP {
 	ret, _, _ := syscall.SyscallN(beginPaint.Addr(), uintptr(hwnd), uintptr(unsafe.Pointer(p)))
 	return HDWP(ret)
+}
+func RegisterClassEx(c *WNDCLASSEX) {
+	_, _, _ = syscall.SyscallN(registerClassEx.Addr(), uintptr(unsafe.Pointer(c)))
 }
